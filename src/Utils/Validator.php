@@ -3,7 +3,7 @@
 
     class Validator {
         public static function validateEmail(string $email): bool {
-            return filter_var($email. FILTER_VALIDATE_EMAIL) !== false;
+            return !empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
         }
 
         public static function validateLogin(string $login): bool {

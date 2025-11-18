@@ -31,6 +31,7 @@
             $polaczenie = Database::getConnection();
             $zapytanie = $polaczenie->prepare("SELECT * FROM `users` WHERE `login` = ?");
             $zapytanie->bindParam(1, $login, PDO::PARAM_STR);
+            $zapytanie->execute();
             $row = $zapytanie->fetch(PDO::FETCH_ASSOC);
 
             return $row ? self::mapRowToUser($row) : null;
