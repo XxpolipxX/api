@@ -40,7 +40,7 @@
                 }
 
                 UserRepository::addUser(new User($email, $login, $passwordHash));
-                return ['success' => true, 'message' => 'Użytkownik zarejestrowany'];
+                return ['success' => true, 'message' => 'Użytkownik zarejestrowany', 'login' => $login];
             } catch(Exception $e) {
                 return ['success' => false, 'error' => $e->getMessage()];
             }

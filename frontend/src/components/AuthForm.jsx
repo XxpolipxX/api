@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function AuthForm({
@@ -7,10 +8,31 @@ export default function AuthForm({
     submitLabel,
     bottomText,
     bottomLink,
-    bottomLinkLabel
+    bottomLinkLabel,
+    onSubmit
 }) {
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+
+        const formData = new FormData(e.target);
+        const values = Object.fromEntries(formData.entries());
+
+        const result = await onSubmit(values);
+
+        if(result.success) {
+            setSuccess("Rejestracja zakończona sukcesem!");
+        } else {
+            setError(result.error || "Wystąpił błąd");
+        }
+    };
+
     return (
-        <form method="post" className="login-container fade-in">
+        <form method="post" className="login-container fade-in" onSubmit={handleSubmit}>
             <h1 className="title">{title}</h1>
             <h3 className="subtitle">{subtitle}</h3>
 
@@ -20,13 +42,14 @@ export default function AuthForm({
                     type={field.type}
                     placeholder={field.placeholder}
                     className="text-field"
+                    name={field.name}
                     required
                     minLength={field.minLength || undefined}
                 />
             ))}
 
-            <h4 className="error-label">Tu bedo erory</h4>
-            <h4 className="success-label">Tu bedzie że pykło</h4>
+            { error && <h4 className="error-label">{error}</h4> }
+            { success && <h4 className="success-label">{success}</h4> }
 
             <input type="submit" value={submitLabel} className="login-button"/>
 

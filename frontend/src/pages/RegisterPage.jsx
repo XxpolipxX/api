@@ -1,4 +1,5 @@
 import AuthForm from "../components/AuthForm";
+import handleRegister from "../services/handleRegister";
 
 export default function RegisterPage() {
   return (
@@ -6,14 +7,15 @@ export default function RegisterPage() {
       title="TODO List"
       subtitle="Zarejestruj się, aby kontynuować"
       fields={[
-        {type: "email", placeholder: "Adres email", required: true},
-        { type: "text", placeholder: "Nazwa użytkownika", required: true },
-        { type: "password", placeholder: "Hasło", required: true, minLength: 8 },
+        {type: "email", placeholder: "Adres email", name: 'email', required: true},
+        { type: "text", placeholder: "Nazwa użytkownika", name: 'login', required: true },
+        { type: "password", placeholder: "Hasło", name: 'password', required: true, minLength: 8 },
       ]}
       submitLabel="Zarejestruj się"
       bottomText="Masz już konto?"
       bottomLink="/login"
       bottomLinkLabel="Zaloguj się"
+      onSubmit={({ login, password, email }) => handleRegister(login, password, email)}
     />
   );
 }
