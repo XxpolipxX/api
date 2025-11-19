@@ -1,7 +1,7 @@
 {
     "name": "root/app",
     "require": {
-        "firebase/php-jwt": "^6.0"
+        "firebase/php-jwt": "^6.11"
     },
     "autoload": {
         "psr-4": {

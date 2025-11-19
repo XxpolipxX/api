@@ -1,13 +1,12 @@
 <?php
     namespace App;
     use App\Database\Database;
+    use App\Security\SessionManager;
 
     class Test {
-        public static function hello(): array {
-            $pdo = Database::getConnection();
-            $zapytanie = $pdo->prepare("DESC `users`");
-            $zapytanie->execute();
-            return $zapytanie->fetchAll();
+        public static function hello(): string {
+            $test = SessionManager::generateAccessToken(1);
+            return $test;
         }
     }
 ?>

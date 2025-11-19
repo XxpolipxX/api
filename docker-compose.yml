@@ -16,6 +16,7 @@ services:
       DB_USER: api_user
       DB_PASS: api_pass
       DB_CHARSET: utf8mb4
+      SECRET_KEY: 'secret_key'
 
   db:
     image: mysql:8
