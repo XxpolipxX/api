@@ -76,7 +76,7 @@
                 $refreshToken = SessionManager::generateRefreshToken($user->getID());
                 SessionManager::setSessionCookies($accessToken, $refreshToken);
 
-                return ['success' => true, 'message' => 'Zalogowano pomyślnie', 'user' => $user->toArray()];
+                return ['success' => true, 'message' => 'Zalogowano pomyślnie', 'login' => $user->getLogin()];
             } catch(Exception $e) {
                 return ['success' => false, 'error' => $e->getMessage()];
             }
