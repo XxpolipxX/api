@@ -37,7 +37,7 @@
                 'exp' => $now + self::REFRESH_TTL,
                 'type' => 'refresh'
             ];
-            return JWT::encode($payload, self::$SECRET, self::ALGORITHM);
+            return JWT::encode($payload, self::getSecret(), self::ALGORITHM);
         }
 
         public static function setSessionCookies(string $accessToken, string $refreshToken): void {
@@ -47,20 +47,33 @@
 
         public static function decodeToken(string $token): ?object {
             try {
-                return JWT::decode($token, new Key(self::$SECRET, self::ALGORITHM));
+                return JWT::decode($token, new Key(self::getSecret(), self::ALGORITHM));
             } catch(\Throwable $e) {
                 return null;
             }
         }
 
         public static function getAuthenticatedUserID(): ?int {
+            // echo '<pre>';
+            // print_r($_COOKIE);
+            // echo '</pre>';
             $token = $_COOKIE['access_token'] ?? null;
+
             if(!$token) {
                 return null;
             }
 
+            // echo '<br>';
+            // echo 'tworzenie obiektu Key<pre>';
+            // print_r(new Key(self::getSecret(), self::ALGORITHM));
+            // echo '</pre>';            
+
             try {
-                $decoded = JWT::decode($token, new Key(self::$SECRET, self::ALGORITHM));
+                $decoded = JWT::decode($token, new Key(self::getSecret(), self::ALGORITHM));
+                // echo '<br>';
+                // echo 'zmienna decoded<pre>';
+                // print_r($decoded);
+                // echo '</pre>';
                 if(($decoded->type ?? '') !== 'access') {
                     return null;
                 }
@@ -77,6 +90,13 @@
                 'path' => '/',
                 'httponly' => true
             ]);
+        }
+
+        private static function getSecret(): string {
+            if(!isset(self::$SECRET)) {
+                self::init();
+            }
+            return self::$SECRET;
         }
     }
 ?>
