@@ -1,52 +1,44 @@
 <?php
-
     use App\Controller\UserController;
+    use App\Core\Router;
     use App\Security\SessionManager;
 
     require __DIR__ . '/../vendor/autoload.php';
 
     header('Content-Type: application/json');
 
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $method = $_SERVER['REQUEST_METHOD'];
+    $router = new Router();
 
-    if($uri === '/api/v1/register' && $method === 'POST') {
-        // rejestracja
-        $data = json_decode(file_get_contents('php://input'), true);
-        $response = UserController::register($data);
-        echo json_encode($response);
-    } elseif($uri === '/api/v1/login' && $method === 'POST') {
-        // logowanie
-        $data = json_decode(file_get_contents('php://input'), true);
-        $response = UserController::login($data);
-        echo json_encode($response);
-    } elseif($uri === '/api/v1/check_session' && $method === 'GET') {
-        // endpoint do sprawdzenia sesji
+    // rejestracja
+    $router->add('POST', '/api/v1/register', function($data) {
+        return UserController::register($data);
+    });
+
+    // logowanie
+    $router->add('POST', '/api/v1/login', function($data) {
+        return UserController::login($data);
+    });
+
+    // sprawdzanie sesji
+    $router->add('GET', '/api/v1/check_session', function() {
         $userID = SessionManager::getAuthenticatedUserID();
-        // echo '<pre>';
-        // print_r($_COOKIE);
-        // echo '</pre>';
         if(!$userID) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'error' => 'Brak aktywnej sesji', 'message' => 'test']);
-        } else {
-            echo json_encode(['success' => true, 'message' => 'jest sesja']);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
-    } else {
-        http_response_code(404);
-        echo json_encode(['error' => 'Błędny endpoint', 'endpoint' => $uri]);
-    }
+        http_response_code(200);
+        return ['success' => true, 'message' => 'jest sesja'];
+    });
 
+    // wylogowanie
+    $router->add('GET', '/api/v1/logout', function() {
+        SessionManager::logout();
+        http_response_code(200);
+        return ['success' => true, 'message' => 'Wylogowano'];
+    });
 
-
-    // autoryzacja ciastka z tokenem do wykorzystania potem
-    // trza to wstawić do endpointa
-    // $userID = SessionManager::getAuthenticatedUserID();
-    // if(!$userID) {
-    //     http_response_code(401);
-    //     echo json_encode(['success' => false, 'error' => 'Brak autoryzacji']);
-    //     exit;
-    // }
-    //
-    // tu jak jest autoryzowany
+    // obsługa żądania
+    $method = $_SERVER['REQUEST_METHOD'];
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $router->dispatch($method, $uri);
 ?>

@@ -84,6 +84,19 @@
             }
         }
 
+        public static function logout(): void {
+            self::clearCookie('access_token');
+            self::clearCookie('refresh_token');
+        }
+
+        private static function clearCookie(string $name, bool $httpOnly = true): void {
+            setcookie($name, '', [
+                'expires' => time() - 3600,
+                'path' => '/',
+                'httponly' => $httpOnly
+            ]);
+        }
+
         private static function setCookie(string $name, string $value, int $ttl): void {
             setcookie($name, $value, [
                 'expires' => time() + $ttl,
