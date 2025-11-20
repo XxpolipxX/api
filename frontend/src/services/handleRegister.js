@@ -1,7 +1,4 @@
 export default async function handleRegister(login, password, email) {
-    console.log(login);
-    console.log(password);
-    console.log(email);
     if(!login || !password || !email) {
         return {
             success: false,
@@ -24,7 +21,7 @@ export default async function handleRegister(login, password, email) {
         });
 
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         if(result.success) {
             return {
                 success: result.success,
