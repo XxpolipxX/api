@@ -23,6 +23,9 @@
     } elseif($uri === '/api/v1/check_session' && $method === 'GET') {
         // endpoint do sprawdzenia sesji
         $userID = SessionManager::getAuthenticatedUserID();
+        // echo '<pre>';
+        // print_r($_COOKIE);
+        // echo '</pre>';
         if(!$userID) {
             http_response_code(401);
             echo json_encode(['success' => false, 'error' => 'Brak aktywnej sesji', 'message' => 'test']);
