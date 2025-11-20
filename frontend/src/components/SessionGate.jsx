@@ -9,7 +9,27 @@ export default function SessionGate({ children }) {
     }, []);
 
     if(isSessionActive === null) {
-        return <div className="loading">Sprawdzanie sesji...</div>;
+        // return <div className="loading">Sprawdzanie sesji...</div>;
+        return (
+            <div className="loader">
+                <div className="circle">
+                    <div className="dot"></div>
+                    <div className="outline"></div>
+                </div>
+                <div className="circle">
+                    <div className="dot"></div>
+                    <div className="outline"></div>
+                </div>
+                <div className="circle">
+                    <div className="dot"></div>
+                    <div className="outline"></div>
+                </div>
+                <div className="circle">
+                    <div className="dot"></div>
+                    <div className="outline"></div>
+                </div>
+            </div>
+        );
     }
 
     return children(isSessionActive, setIsSessionActive);

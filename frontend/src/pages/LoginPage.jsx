@@ -8,7 +8,7 @@ export default function LoginPage({ setSessionActive }) {
       subtitle="Zaloguj się, aby kontynuować"
       fields={[
         { type: "text", placeholder: "Nazwa użytkownika", name: 'login', required: true },
-        { type: "password", placeholder: "Hasło", name: 'password', required: true, minLength: 8 },
+        { type: "password", placeholder: "Hasło musi mieć co najmniej 8 znaków, 1 dużą literę, 1 cyfrę i 1 znak specjalny", name: 'password', required: true, minLength: 8 },
       ]}
       submitLabel="Zaloguj się"
       bottomText="Nie masz jeszcze konta?"

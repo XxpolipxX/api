@@ -40,5 +40,6 @@
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    sleep(3);
     $router->dispatch($method, $uri);
 ?>
