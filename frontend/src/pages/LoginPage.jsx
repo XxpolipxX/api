@@ -1,7 +1,7 @@
 import AuthForm from "../components/AuthForm";
 import handleLogin from "../services/handleLogin";
 
-export default function LoginPage() {
+export default function LoginPage({ setSessionActive }) {
   return (
     <AuthForm
       title="TODO List"
@@ -15,6 +15,8 @@ export default function LoginPage() {
       bottomLink="/register"
       bottomLinkLabel="Zarejestruj się"
       onSubmit={({ login, password }) => handleLogin(login, password)}
+      successMessage="Zalogowano pomyślnie"
+      setSessionActive={setSessionActive}
     />
   );
 }

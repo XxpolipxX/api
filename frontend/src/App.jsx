@@ -1,34 +1,45 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import RedirectToLogin from './utils/RedirectToLogin';
 import HomePage from './pages/HomePage';
-import checkSession from './hooks/checkSession';
-import { useEffect, useState } from 'react';
+import SessionGate from './components/SessionGate';
 
-function App() {
-  const [isSessionActive, setIsSessionActive] = useState(null);
-
-  useEffect(() => {
-    checkSession().then(setIsSessionActive);
-  }, []);
+export default function App() {
   return (
     <div className="background">
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<RedirectToLogin />} />
-        <Route path='/login' element={<LoginPage />}/>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/home"
-          element={
-            isSessionActive ? <HomePage /> : <Navigate to="/login" replace />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <SessionGate>
+          {(isSessionActive, setIsSessionActive) => (
+            <Routes>
+              <Route path="/" element={<Navigate to={isSessionActive ? "/home" : "/login"} replace />} />
+              <Route
+                path="/login"
+                element={
+                  isSessionActive ? (
+                    <Navigate to="/home" replace />
+                  ) : (
+                    <LoginPage setSessionActive={setIsSessionActive} />
+                  )
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  isSessionActive ? (
+                    <Navigate to="/home" replace />
+                  ) : (
+                    <RegisterPage setSessionActive={setIsSessionActive} />
+                  )
+                }
+              />
+              <Route
+                path="/home"
+                element={isSessionActive ? <HomePage /> : <Navigate to="/login" replace />}
+              />
+            </Routes>
+          )}
+        </SessionGate>
+      </BrowserRouter>
     </div>
   );
 }
-
-export default App;

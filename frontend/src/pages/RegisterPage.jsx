@@ -16,6 +16,7 @@ export default function RegisterPage() {
       bottomLink="/login"
       bottomLinkLabel="Zaloguj się"
       onSubmit={({ login, password, email }) => handleRegister(login, password, email)}
+      successMessage="Rejestracja zakończona pomyślnie"
     />
   );
 }

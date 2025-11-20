@@ -11,7 +11,7 @@
         }
 
         public static function validatePassword(string $password): bool {
-            return preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/', $password) === 1;
+            return preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/', $password) === 1;
         }
     }
 ?>

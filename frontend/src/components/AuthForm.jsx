@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import checkSession from "../hooks/checkSession";
 
 export default function AuthForm({
     title,
@@ -9,10 +10,14 @@ export default function AuthForm({
     bottomText,
     bottomLink,
     bottomLinkLabel,
-    onSubmit
+    onSubmit,
+    successMessage,
+    setSessionActive
 }) {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +30,16 @@ export default function AuthForm({
         const result = await onSubmit(values);
 
         if(result.success) {
-            setSuccess("Rejestracja zakończona sukcesem!");
+            setSuccess(successMessage || "Operacja zakończona pomyślnie");
+
+            const sessionConfirmed = await checkSession();
+            console.log(sessionConfirmed);
+            if(sessionConfirmed) {
+                setSessionActive(true);
+                navigate("/home");
+            } else {
+                setError("Sesja nie została poprawnie ustawiona");
+            }
         } else {
             setError(result.error || "Wystąpił błąd");
         }
@@ -48,7 +62,7 @@ export default function AuthForm({
                 />
             ))}
 
-            { error && <h4 className="error-label">{error}</h4> }
+            { error && <h4 className="error-label">{error ? error : 'Hasło musi mieć min. 8 znaków, zawierać 1 dużą literę, 1 cyfrę i 1 znak specjalny'}</h4> }
             { success && <h4 className="success-label">{success}</h4> }
 
             <input type="submit" value={submitLabel} className="login-button"/>

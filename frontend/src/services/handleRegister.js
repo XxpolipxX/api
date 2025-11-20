@@ -1,4 +1,5 @@
 export default async function handleRegister(login, password, email) {
+    console.log(JSON.stringify({login, password, email}));
     if(!login || !password || !email) {
         return {
             success: false,
