@@ -37,8 +37,6 @@ export default function AuthForm({
             if(sessionConfirmed) {
                 setSessionActive(true);
                 navigate("/home");
-            } else {
-                setError("Sesja nie została poprawnie ustawiona");
             }
         } else {
             setError(result.error || "Wystąpił błąd");

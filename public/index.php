@@ -2,6 +2,7 @@
     use App\Controller\UserController;
     use App\Core\Router;
     use App\Security\SessionManager;
+    use App\Repository\UserRepository;
 
     require __DIR__ . '/../vendor/autoload.php';
 
@@ -21,8 +22,20 @@
 
     // sprawdzanie sesji
     $router->add('GET', '/api/v1/check_session', function() {
+        // $userID = SessionManager::getAuthenticatedUserID();
+        // if(!$userID) {
+        //     http_response_code(401);
+        //     return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        // }
+        // http_response_code(200);
+        // return ['success' => true, 'message' => 'jest sesja', 'login' => UserRepository::];
         $userID = SessionManager::getAuthenticatedUserID();
         if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        $user = UserRepository::findByID($userID);
+        if(!$user) {
             http_response_code(401);
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
@@ -37,9 +50,24 @@
         return ['success' => true, 'message' => 'Wylogowano'];
     });
 
+    // zwrócenie loginu usera, który ma sesję
+    $router->add('GET', '/api/v1/getLogin', function() {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        $user = UserRepository::findByID($userID);
+        if(!$user) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return ['success' => true, 'login' => $user->getLogin()];
+    });
+
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    sleep(3);
+    // sleep(3);
     $router->dispatch($method, $uri);
 ?>
