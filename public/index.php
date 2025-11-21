@@ -37,7 +37,7 @@
     });
 
     // wylogowanie
-    $router->add('GET', '/api/v1/logout', function() {
+    $router->add('DELETE', '/api/v1/logout', function() {
         SessionManager::logout();
         http_response_code(200);
         return ['success' => true, 'message' => 'Wylogowano'];
@@ -61,6 +61,6 @@
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    sleep(3);
+    // sleep(3);
     $router->dispatch($method, $uri);
 ?>

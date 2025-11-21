@@ -34,7 +34,13 @@ export default function App() {
               />
               <Route
                 path="/home"
-                element={isSessionActive ? <HomePage /> : <Navigate to="/login" replace />}
+                element={
+                  isSessionActive ? (
+                    <HomePage setSessionActive={setIsSessionActive} />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
               />
             </Routes>
           )}

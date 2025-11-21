@@ -10,7 +10,6 @@ export default function SessionGate({ children }) {
     }, []);
 
     if(isSessionActive === null) {
-        // return <div className="loading">Sprawdzanie sesji...</div>;
         return <Loading />;
     }
 
