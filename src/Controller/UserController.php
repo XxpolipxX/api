@@ -99,5 +99,36 @@
                 return ['success' => false, 'error' => $e->getMessage()];
             }
         }
+
+        public static function changeLogin(int $userID, array $data): array {
+            $allowedKeys = ['new_login'];
+            $extraKeys = array_diff(array_keys($data), $allowedKeys);
+
+            if (!empty($extraKeys)) {
+                http_response_code(400);
+                return ['success' => false, 'error' => 'Niedozwolone pola'];
+            }
+
+            try {
+                $newLogin = trim($data['new_login'] ?? '');
+                echo '<pre>';
+                print_r($data);
+                echo '</pre>';
+                if (!Validator::validateLogin($newLogin)) {
+                    http_response_code(400);
+                    return ['success' => false, 'error' => 'Błędny login'];
+                }
+                if (UserRepository::findByLogin($newLogin) !== null) {
+                    http_response_code(409);
+                    return ['success' => false, 'error' => 'Zajęty login'];
+                }
+
+                $success = UserRepository::updateLogin($newLogin, $userID);
+                return ['success' => $success];
+            } catch (Exception $e) {
+                http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
     }
 ?>

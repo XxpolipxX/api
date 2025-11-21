@@ -17,14 +17,21 @@
 
             if(!$handler) {
                 http_response_code(404);
-                // echo '<pre>';
-                // print_r($this->routes);
-                // echo '</pre>';
                 echo json_encode(['error' => 'Błędny endpoint', 'endpoint' => $uri]);
                 return;
             }
 
-            $data = $method === 'POST' ? json_decode(file_get_contents('php://input'), true) ?? [] : [];
+            $data = [];
+            if(in_array($method, ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'], true)) {
+                $raw = file_get_contents('php://input');
+                if(!empty($raw)) {
+                    $decoded = json_decode($raw, true);
+                    if(is_array($decoded)) {
+                        $data = $decoded;
+                    }
+                }
+            }
+
             $response = $handler($data);
             echo json_encode($response);
         }

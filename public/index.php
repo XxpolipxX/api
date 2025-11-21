@@ -11,17 +11,17 @@
     $router = new Router();
 
     // rejestracja
-    $router->add('POST', '/api/v1/register', function($data) {
+    $router->add('POST', '/api/v1/register', function($data): array {
         return UserController::register($data);
     });
 
     // logowanie
-    $router->add('POST', '/api/v1/login', function($data) {
+    $router->add('POST', '/api/v1/login', function($data): array {
         return UserController::login($data);
     });
 
     // sprawdzanie sesji
-    $router->add('GET', '/api/v1/check_session', function() {
+    $router->add('GET', '/api/v1/check_session', function(): array {
         $userID = SessionManager::getAuthenticatedUserID();
         if(!$userID) {
             http_response_code(401);
@@ -37,14 +37,14 @@
     });
 
     // wylogowanie
-    $router->add('DELETE', '/api/v1/logout', function() {
+    $router->add('DELETE', '/api/v1/logout', function(): array {
         SessionManager::logout();
         http_response_code(200);
         return ['success' => true, 'message' => 'Wylogowano'];
     });
 
     // zwrócenie loginu usera, który ma sesję
-    $router->add('GET', '/api/v1/getLogin', function() {
+    $router->add('GET', '/api/v1/getLogin', function(): array {
         $userID = SessionManager::getAuthenticatedUserID();
         if(!$userID) {
             http_response_code(401);
@@ -56,6 +56,21 @@
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
         return ['success' => true, 'login' => $user->getLogin()];
+    });
+
+    // zmiana loginu
+    $router->add('PATCH', '/api/v1/changeLogin', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        $user = UserRepository::findByID($userID);
+        if(!$user) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return UserController::changeLogin($user->getID(), $data);
     });
 
     // obsługa żądania
