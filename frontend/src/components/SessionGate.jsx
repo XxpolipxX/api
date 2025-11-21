@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import checkSession from '../hooks/checkSession';
+import Loading from "./Loading";
 
 export default function SessionGate({ children }) {
     const [isSessionActive, setIsSessionActive] = useState(null);
@@ -10,26 +11,7 @@ export default function SessionGate({ children }) {
 
     if(isSessionActive === null) {
         // return <div className="loading">Sprawdzanie sesji...</div>;
-        return (
-            <div className="loader">
-                <div className="circle">
-                    <div className="dot"></div>
-                    <div className="outline"></div>
-                </div>
-                <div className="circle">
-                    <div className="dot"></div>
-                    <div className="outline"></div>
-                </div>
-                <div className="circle">
-                    <div className="dot"></div>
-                    <div className="outline"></div>
-                </div>
-                <div className="circle">
-                    <div className="dot"></div>
-                    <div className="outline"></div>
-                </div>
-            </div>
-        );
+        return <Loading />;
     }
 
     return children(isSessionActive, setIsSessionActive);

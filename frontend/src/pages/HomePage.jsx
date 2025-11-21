@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import getUserLogin from "../services/getUserLogin";
+import getUserLogin from "../hooks/getUserLogin";
+import Loading from "../components/Loading";
 
 export default function HomePage() {
     const [login, setLogin] = useState(null);
@@ -10,7 +11,7 @@ export default function HomePage() {
     }, []);
 
     if(login === null) {
-        return (<h1>Oczekiwanie na login</h1>);
+        return <Loading />;
     }
 
     return (

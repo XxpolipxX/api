@@ -22,13 +22,6 @@
 
     // sprawdzanie sesji
     $router->add('GET', '/api/v1/check_session', function() {
-        // $userID = SessionManager::getAuthenticatedUserID();
-        // if(!$userID) {
-        //     http_response_code(401);
-        //     return ['success' => false, 'error' => 'Brak aktywnej sesji'];
-        // }
-        // http_response_code(200);
-        // return ['success' => true, 'message' => 'jest sesja', 'login' => UserRepository::];
         $userID = SessionManager::getAuthenticatedUserID();
         if(!$userID) {
             http_response_code(401);
@@ -68,6 +61,6 @@
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    // sleep(3);
+    sleep(3);
     $router->dispatch($method, $uri);
 ?>

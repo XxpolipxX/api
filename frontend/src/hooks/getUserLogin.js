@@ -7,10 +7,6 @@ export default async function getUserLogin() {
                 'Accept': 'application/json'
             }
         });
-        // console.log(response.login);
-        // console.log(response);
-        // console.log("GETUSERLOGIN: ", response.login);
-        // return response.login;
         const result = await response.json();
         return result.login;
     } catch {
