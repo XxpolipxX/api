@@ -111,9 +111,9 @@
 
             try {
                 $newLogin = trim($data['new_login'] ?? '');
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
+                // echo '<pre>';
+                // print_r($data);
+                // echo '</pre>';
                 if (!Validator::validateLogin($newLogin)) {
                     http_response_code(400);
                     return ['success' => false, 'error' => 'Błędny login'];
@@ -124,8 +124,30 @@
                 }
 
                 $success = UserRepository::updateLogin($newLogin, $userID);
-                return ['success' => $success];
+                http_response_code(200);
+                return ['success' => $success, 'newLogin' => $newLogin];
             } catch (Exception $e) {
+                http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
+
+        public static function deleteUser(int $userID): array {
+            try {
+                $user = UserRepository::findByID($userID);
+                if(!$user) {
+                    http_response_code(400);
+                    return ['success' => false, 'error' => 'Nie udało się wylogować'];
+                }
+                $success = UserRepository::deleteUser($user->getID());
+                if(!$success) {
+                    http_response_code(500);
+                    return ['success' => false, 'error' => 'Coś przy bazie danych nie pykło'];
+                }
+
+                http_response_code(200);
+                return ['success' => true, 'message' => 'Usunięto konto'];
+            } catch(Exception $e) {
                 http_response_code(500);
                 return ['success' => false, 'error' => $e->getMessage()];
             }

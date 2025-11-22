@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import changeLoginRequest from "../services/changeLoginRequest";
 
-export default function ChangeLogin() {
+export default function ChangeLogin({ setLogin }) {
   const [newLogin, setNewLogin] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const result = await changeLoginRequest(newLogin);
     if (result) {
-      navigate("/home", { replace: true });
+      console.log(result.newLogin);
+      setLogin(result.newLogin);
     }
+
+    setNewLogin("");
   };
 
   return (

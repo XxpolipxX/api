@@ -55,6 +55,7 @@
             http_response_code(401);
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
+        http_response_code(200);
         return ['success' => true, 'login' => $user->getLogin()];
     });
 
@@ -71,6 +72,22 @@
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
         return UserController::changeLogin($user->getID(), $data);
+    });
+
+    // usunięcie konta
+    $router->add('DELETE', '/api/v1/deleteAccount', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        $user = UserRepository::findByID($userID);
+        if(!$user) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        SessionManager::logout();
+        return UserController::deleteUser($user->getID());
     });
 
     // obsługa żądania

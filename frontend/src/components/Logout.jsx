@@ -9,8 +9,6 @@ export default function Logout({ setSessionActive }) {
 
     const result = await logoutRequest();
 
-    alert("Wylogowano");
-
     if (result) {
       setSessionActive(false);
       navigate("/login", { replace: true });

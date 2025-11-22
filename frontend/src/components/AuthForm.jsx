@@ -41,6 +41,8 @@ export default function AuthForm({
         } else {
             setError(result.error || "Wystąpił błąd");
         }
+
+        e.target.reset();
     };
 
     return (

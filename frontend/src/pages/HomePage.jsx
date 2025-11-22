@@ -19,7 +19,7 @@ export default function HomePage({ setSessionActive }) {
         <>
             <h1>Udało się zalogować {login}</h1>
             <Logout setSessionActive={setSessionActive} />
-            <ChangeLogin />
+            <ChangeLogin setLogin={setLogin}/>
         </>
     );
 }

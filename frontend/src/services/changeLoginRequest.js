@@ -6,8 +6,6 @@ export default async function changeLoginRequest(newLogin) {
         };
     }
 
-    console.log(JSON.stringify({newLogin}));
-
     try {
         const response = await fetch ('/api/v1/changeLogin', {
             method: "PATCH",
@@ -20,6 +18,7 @@ export default async function changeLoginRequest(newLogin) {
         if(result.success) {
             return {
                 success: result.success,
+                newLogin: result.newLogin
             }
         } else {
             return {
