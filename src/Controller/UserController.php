@@ -111,9 +111,6 @@
 
             try {
                 $newLogin = trim($data['new_login'] ?? '');
-                // echo '<pre>';
-                // print_r($data);
-                // echo '</pre>';
                 if (!Validator::validateLogin($newLogin)) {
                     http_response_code(400);
                     return ['success' => false, 'error' => 'Błędny login'];
@@ -124,10 +121,47 @@
                 }
 
                 $success = UserRepository::updateLogin($newLogin, $userID);
+                if(!$success) {
+                    http_response_code(500);
+                    return ['success' => false, 'error' => 'Coś nie pykło przy bazie'];
+                }
                 http_response_code(200);
                 return ['success' => $success, 'newLogin' => $newLogin];
             } catch (Exception $e) {
                 http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
+
+        public static function changeEmail(int $userID, array $data): array {
+            $allowedKeys = ['new_email'];
+            $extraKeys = array_diff(array_keys($data), $allowedKeys);
+
+            if(!empty($extraKeys)) {
+                http_response_code(400);
+                return ['success' => false, 'error' => 'Niedozwolone pola'];
+            }
+
+            try {
+                $newEmail = trim($data['new_email'] ?? '');
+                if(!Validator::validateEmail($newEmail)) {
+                    http_response_code(400);
+                    return ['success' => false, 'error' => 'Błędny email'];
+                }
+
+                if(UserRepository::findByEmail($newEmail) !== null) {
+                    http_response_code(409);
+                    return ['success' => false, 'error' => 'Zajęty email'];
+                }
+
+                $success = UserRepository::updateEmail($newEmail, $userID);
+                if(!$success) {
+                    http_response_code(500);
+                    return ['success' => false, 'error' => 'Coś nie pykło przy bazie'];
+                }
+                http_response_code(200);
+                return ['success' => $success, 'newEmail' => $newEmail];
+            } catch(Exception $e) {
                 return ['success' => false, 'error' => $e->getMessage()];
             }
         }

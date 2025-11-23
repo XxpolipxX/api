@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import logoutRequest from "../hooks/logoutRequest";
+import logoutRequest from "../../hooks/logoutRequest";
 
 export default function Logout({ setSessionActive }) {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function Logout({ setSessionActive }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="submit" value="Wyloguj" />
+      <input type="submit" value="Wyloguj" className="login-button"/>
     </form>
   );
 }

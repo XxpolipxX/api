@@ -7,7 +7,7 @@
         }
 
         public static function validateLogin(string $login): bool {
-            return preg_match('/^[a-zA-Z0-9_]{3,20}$/', $login) === 1;
+            return preg_match('/^[a-zA-Z0-9_]{3,100}$/', $login) === 1;
         }
 
         public static function validatePassword(string $password): bool {

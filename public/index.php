@@ -90,9 +90,22 @@
         return UserController::deleteUser($user->getID());
     });
 
+    $router->add('PATCH', '/api/v1/changeEmail', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        $user = UserRepository::findByID($userID);
+        if(!$user) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return UserController::changeEmail($user->getID(), $data);
+    });
+
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    // sleep(3);
     $router->dispatch($method, $uri);
 ?>
