@@ -10,6 +10,9 @@
 
     $router = new Router();
 
+
+    // v1
+
     // rejestracja
     $router->add('POST', '/api/v1/register', function($data): array {
         return UserController::register($data);
@@ -103,6 +106,11 @@
         }
         return UserController::changeEmail($user->getID(), $data);
     });
+
+
+    // v2
+
+    
 
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];

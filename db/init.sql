@@ -6,24 +6,29 @@ CREATE TABLE `users` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE `priority` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(255) UNIQUE NOT NULL
+);
+
 CREATE TABLE `categories` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(100) NOT NULL,
-    `user_id` INT,
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+    `name` VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE `tasks` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `user_id` INT NOT NULL,
     `category_id` INT,
-    `title` VARCHAR(255) UNIQUE NOT NULL,
+    `priority_id` INT,
+    `title` VARCHAR(255) NOT NULL,
     `description` TEXT,
     `due_date` DATE,
     `is_completed` BOOLEAN DEFAULT FALSE,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL
+    FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL,
+    FOREIGN KEY (`priority_id`) REFERENCES `priority`(`id`) ON DELETE SET NULL
 );
 
 CREATE TABLE `shared_tasks` (
@@ -34,3 +39,11 @@ CREATE TABLE `shared_tasks` (
     FOREIGN KEY (`task_id`) REFERENCES `tasks`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`shared_with`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
+
+INSERT INTO `priority` VALUES(NULL, 'wazne');
+INSERT INTO `priority` VALUES(NULL, 'pilne');
+INSERT INTO `priority` VALUES(NULL, 'nie wazne');
+
+INSERT INTO `categories` VALUES (NULL, 'szkola');
+INSERT INTO `categories` VALUES (NULL, 'praca');
+INSERT INTO `categories` VALUES (NULL, 'dom');
