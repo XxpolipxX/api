@@ -1,5 +1,7 @@
 <?php
-    use App\Controller\UserController;
+
+use App\Controller\TaskController;
+use App\Controller\UserController;
     use App\Core\Router;
     use App\Security\SessionManager;
     use App\Repository\UserRepository;
@@ -110,6 +112,15 @@
 
     // v2
 
+    // dodanie nowego taska
+    $router->add('POST', '/api/v2/addTask', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::createTask($data, $userID);
+    });
     
 
     // obsługa żądania

@@ -21,7 +21,7 @@ CREATE TABLE `tasks` (
     `user_id` INT NOT NULL,
     `category_id` INT,
     `priority_id` INT,
-    `title` VARCHAR(255) NOT NULL,
+    `title` TEXT NOT NULL,
     `description` TEXT,
     `due_date` DATE,
     `is_completed` BOOLEAN DEFAULT FALSE,
