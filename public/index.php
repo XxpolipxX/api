@@ -1,7 +1,9 @@
 <?php
 
-use App\Controller\TaskController;
-use App\Controller\UserController;
+    use App\Controller\CategoriesController;
+    use App\Controller\PriorityController;
+    use App\Controller\TaskController;
+    use App\Controller\UserController;
     use App\Core\Router;
     use App\Security\SessionManager;
     use App\Repository\UserRepository;
@@ -111,6 +113,26 @@ use App\Controller\UserController;
 
 
     // v2
+
+    // pobranie wszystkich kategorii
+    $router->add('GET', '/api/v2/getCategories', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return CategoriesController::getAllCategories();
+    });
+
+    // pobranie wszystkich priority
+    $router->add('GET', '/api/v2/getPriorities', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return PriorityController::getAllPriorities();
+    });
 
     // dodanie nowego taska
     $router->add('POST', '/api/v2/addTask', function($data): array {
