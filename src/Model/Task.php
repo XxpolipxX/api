@@ -25,23 +25,23 @@
             bool $isCompleted,
             ?int $id = null,
             ?int $userID = null,
-            ?User $user = null,
             ?int $categoryID = null,
-            ?Categories $category = null,
             ?int $priorityID = null,
-            ?Priority $priority = null
+            ?Category $category = null,
+            ?Priority $priority = null,
+            ?User $user = null
         ) {
             $this->id = $id;
             $this->userID = $userID;
-            $this->user = $user;
             $this->categoryID = $categoryID;
-            $this->category = $category;
             $this->priorityID = $priorityID;
-            $this->priority = $priority;
             $this->title = $title;
             $this->description = $description;
             $this->dueDate = $dueDate;
             $this->isCompleted = $isCompleted;
+            $this->user = $user;
+            $this->category = $category;
+            $this->priority = $priority;
         }
 
         // --- GETTERY ---

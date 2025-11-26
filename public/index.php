@@ -5,7 +5,8 @@
     use App\Controller\TaskController;
     use App\Controller\UserController;
     use App\Core\Router;
-    use App\Security\SessionManager;
+use App\Model\Task;
+use App\Security\SessionManager;
     use App\Repository\UserRepository;
 
     require __DIR__ . '/../vendor/autoload.php';
@@ -134,6 +135,16 @@
         return PriorityController::getAllPriorities();
     });
 
+    // pobranie wszystkich tasków dla danego usera
+    $router->add('GET', '/api/v2/getTasksForUser', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::getTasksByUser($userID);
+    });
+
     // dodanie nowego taska
     $router->add('POST', '/api/v2/addTask', function($data): array {
         $userID = SessionManager::getAuthenticatedUserID();
@@ -142,6 +153,76 @@
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
         return TaskController::createTask($data, $userID);
+    });
+
+    // edycja taska
+    $router->add('PUT', '/api/v2/updateTask', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::updateTask($data);
+    });
+
+    // usunięcie taska
+    $router->add('DELETE', '/api/v2/deleteTask', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::deleteTask($data);
+    });
+
+    // oznacz jako wykonane
+    $router->add('PATCH', '/api/v2/markAsDone', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::markFinished($data);
+    });
+
+    // pobranie tasków z filtrami od klienta
+    $router->add('GET', '/api/v2/getFilteredTasks', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::getTasksWithFilters($userID, $_GET);
+    });
+
+    // pobranie info o tasku
+    $router->add('GET', '/api/v2/getTaskByID', function($data): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::getTaskByID($data);
+    });
+
+    // pobranie wykonanych tasków
+    $router->add('GET', '/api/v2/getCompleted', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::getCompletedTasks($userID);
+    });
+
+    // pobranie oczekujących tasków
+    $router->add('GET', '/api/v2/getPending', function(): array {
+        $userID = SessionManager::getAuthenticatedUserID();
+        if(!$userID) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Brak aktywnej sesji'];
+        }
+        return TaskController::getPending($userID);
     });
     
 

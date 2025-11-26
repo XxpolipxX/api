@@ -55,8 +55,8 @@
             }
         }
 
-        public static function updateTask(int $taskID, array $data): array {
-            $allowedKeys = ['title', 'description', 'due_date', 'category_id', 'priority_id', 'is_completed'];
+        public static function updateTask(array $data): array {
+            $allowedKeys = ['title', 'description', 'due_date', 'category_id', 'priority_id', 'is_completed', 'task_id'];
             $extraKeys = array_diff(array_keys($data), $allowedKeys);
 
             if (!empty($extraKeys)) {
@@ -65,6 +65,7 @@
             }
 
             try {
+                $taskID = trim($data['task_id'] ?? '');
                 $task = TaskRepository::findByID($taskID);
                 if (!$task) {
                     http_response_code(404);
@@ -104,8 +105,17 @@
             }
         }
 
-        public static function deleteTask(int $taskID): array {
+        public static function deleteTask(array $data): array {
+            $allowedKeys = ['task_id'];
+            $extraKeys = array_diff(array_keys($data), $allowedKeys);
+
+            if(!empty($extraKeys)) {
+                http_response_code(400);
+                return ['success' => false, 'error' => 'Niedozwolone pola'];
+            }
+
             try {
+                $taskID = trim($data['task_id'] ?? '');
                 $task = TaskRepository::findByID($taskID);
                 if (!$task) {
                     http_response_code(404);
@@ -137,8 +147,17 @@
             }
         }
 
-        public static function getTaskByID(int $taskID): array {
+        public static function getTaskByID(array $data): array {
+            $allowedKeys = ['task_id'];
+            $extraKeys = array_diff(array_keys($data), $allowedKeys);
+
+            if(!empty($extraKeys)) {
+                http_response_code(400);
+                return ['success' => false, 'error' => 'Niedozwolone pola'];
+            }
+
             try {
+                $taskID = trim($data['task_id'] ?? '');
                 $task = TaskRepository::findByID($taskID);
                 if(!$task) {
                     http_response_code(404);
@@ -147,6 +166,70 @@
 
                 http_response_code(200);
                 return ['success' => true, 'task' => $task->toArray()];
+            }catch(Exception $e) {
+                http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
+
+        public static function markFinished(array $data): array {
+            $allowedKeys = ['task_id'];
+
+            $extraKeys = array_diff(array_keys($data), $allowedKeys);
+
+            if(!empty($extraKeys)) {
+                http_response_code(400);
+                return ['success' => false, 'error' => 'Niedozwolone pola'];
+            }
+
+            try {
+                $taskID = trim($data['task_id'] ?? '');
+                $task = TaskRepository::findByID($taskID);
+                if(!$task) {
+                    http_response_code(404);
+                    return ['success' => false, 'error' => 'Nie znaleziono zadania'];
+                }
+
+                $success = TaskRepository::changeToFinished($task);
+                if(!$success) {
+                    http_response_code(500);
+                    return ['success' => false, 'error' => 'Nie udało się oznaczyć zadania jako zakończone'];
+                }
+                http_response_code(200);
+                return ['success' => true, 'message' => 'Zadanie oznaczone jako zakończone'];
+            } catch(Exception $e) {
+                http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
+
+        public static function getCompletedTasks(int $userID): array {
+            try {
+                $tasks = TaskRepository::findCompletedByUserID($userID);
+                http_response_code(200);
+                return ['success' => true, 'tasks' => array_map(fn($t) => $t->toArray(), $tasks)];
+            }catch(Exception $e) {
+                http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
+
+        public static function getPending(int $userID): array {
+            try {
+                $tasks = TaskRepository::findPendingByUserID($userID);
+                http_response_code(200);
+                return ['success' => true, 'tasks' => array_map(fn($t) => $t->toArray(), $tasks)];
+            }catch(Exception $e) {
+                http_response_code(500);
+                return ['success' => false, 'error' => $e->getMessage()];
+            }
+        }
+
+        public static function getTasksWithFilters(int $userID, array $filters): array {
+            try {
+                $tasks = TaskRepository::findByFilters($userID, $filters);
+                http_response_code(200);
+                return ['success' => true, 'tasks' => $tasks];
             }catch(Exception $e) {
                 http_response_code(500);
                 return ['success' => false, 'error' => $e->getMessage()];

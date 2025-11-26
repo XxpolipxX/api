@@ -66,23 +66,37 @@
                 throw new Exception("Nie znaleziono zadania o podanym ID");
             }
 
-            $conn = Database::getConnection();
-            $stmt = $conn->prepare("
+            $polaczenie = Database::getConnection();
+            $zapytanie = $polaczenie->prepare("
                 UPDATE `tasks` 
                 SET `user_id` = ?, `category_id` = ?, `priority_id` = ?, 
                     `title` = ?, `description` = ?, `due_date` = ?, `is_completed` = ?
                 WHERE `id` = ?
             ");
-            $stmt->bindValue(1, $task->getUserID(), PDO::PARAM_INT);
-            $stmt->bindValue(2, $task->getCategoryID(), PDO::PARAM_INT);
-            $stmt->bindValue(3, $task->getPriorityID(), PDO::PARAM_INT);
-            $stmt->bindValue(4, $task->getTitle(), PDO::PARAM_STR);
-            $stmt->bindValue(5, $task->getDescription(), PDO::PARAM_STR);
-            $stmt->bindValue(6, $task->getDueDate(), PDO::PARAM_STR);
-            $stmt->bindValue(7, $task->isCompleted(), PDO::PARAM_BOOL);
-            $stmt->bindValue(8, $task->getID(), PDO::PARAM_INT);
+            $zapytanie->bindValue(1, $task->getUserID(), PDO::PARAM_INT);
+            $zapytanie->bindValue(2, $task->getCategoryID(), PDO::PARAM_INT);
+            $zapytanie->bindValue(3, $task->getPriorityID(), PDO::PARAM_INT);
+            $zapytanie->bindValue(4, $task->getTitle(), PDO::PARAM_STR);
+            $zapytanie->bindValue(5, $task->getDescription(), PDO::PARAM_STR);
+            $zapytanie->bindValue(6, $task->getDueDate(), PDO::PARAM_STR);
+            $zapytanie->bindValue(7, $task->isCompleted(), PDO::PARAM_BOOL);
+            $zapytanie->bindValue(8, $task->getID(), PDO::PARAM_INT);
 
-            return $stmt->execute();
+            return $zapytanie->execute();
+        }
+
+        public static function changeToFinished(Task $task): bool {
+            if(!self::findByID($task->getID())) {
+                throw new Exception("Nie znaleziono zadania o podanym ID");
+            }
+
+            $taskID = $task->getID();
+
+            $polaczenie = Database::getConnection();
+            $zapytanie = $polaczenie->prepare("UPDATE `tasks` SET `is_completed` = TRUE WHERE `id` = ?");
+            $zapytanie->bindParam(1, $taskID, PDO::PARAM_INT);
+
+            return $zapytanie->execute();
         }
 
         public static function deleteTask(int $id): bool {
@@ -150,6 +164,45 @@
                 $tasks[] = self::mapRowToTask($row);
             }
             return $tasks;
+        }
+
+        public static function findByFilters(int $userID, array $filters): array {
+            $polaczenie = Database::getConnection();
+            $allowedFields = ['id', 'title', 'description', 'due_date', 'priority_id', 'category_id', 'is_completed'];
+
+            // wybór kolumn
+            if(isset($filters['pola'])) {
+                $columns = explode(',', $filters['pola']);
+                $columns = array_intersect($columns, $allowedFields);
+                $select = !empty($columns) ? implode(',', $columns) : '*';
+                unset($filters['pola']);    // żeby nie było traktowane jako wwarunke
+            } else {
+                $select = '*';
+            }
+
+            $sql = "SELECT {$select} FROM `tasks` WHERE `user_id` = ?";
+            $params = [$userID];
+
+            // warunki filtrów
+            $operatorMap = [
+                'eq' => '=', 'not' => '!=',
+                'gt' => '>', 'gte' => '>=',
+                'lt' => '<', 'lte' => '<='
+            ];
+
+            foreach($filters as $param => $value) {
+                [$field, $operator] = array_pad(explode(':', $param, 2), 2, 'eq');
+                if(!in_array($field, $allowedFields)) {
+                    continue;
+                }
+                $op = $operatorMap[$operator] ?? '=';
+                $sql .= " AND {$field} {$op} ?";
+                $params[] = $value;
+            }
+
+            $zapytanie = $polaczenie->prepare($sql);
+            $zapytanie->execute($params);
+            return $zapytanie->fetchAll(PDO::FETCH_ASSOC);
         }
 
         private static function mapRowToTask(array $row): Task {
