@@ -186,6 +186,8 @@ use App\Security\SessionManager;
     });
 
     // pobranie tasków z filtrami od klienta
+    // /api/v2/getFilteredTasks?pola=title,due_date
+    // /api/v2/getFilteredTasks?pola=title,due_date&is_completed:eq=0
     $router->add('GET', '/api/v2/getFilteredTasks', function(): array {
         $userID = SessionManager::getAuthenticatedUserID();
         if(!$userID) {
@@ -223,8 +225,7 @@ use App\Security\SessionManager;
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
         return TaskController::getPending($userID);
-    });
-    
+    });    
 
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];
