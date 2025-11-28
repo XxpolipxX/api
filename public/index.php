@@ -225,7 +225,7 @@ use App\Security\SessionManager;
             return ['success' => false, 'error' => 'Brak aktywnej sesji'];
         }
         return TaskController::getPending($userID);
-    });    
+    });
 
     // obsługa żądania
     $method = $_SERVER['REQUEST_METHOD'];

@@ -5,7 +5,7 @@ import DeleteAccount from "./DeleteAccount";
 
 export default function UserCrud({ setSessionActive, setLogin }) {
     return (
-        <div className="container">
+        <div className="user-panel">
             <Logout setSessionActive={setSessionActive}/>
             <ChangeLogin setLogin={setLogin} />
             <ChangeEmail />

@@ -16,7 +16,7 @@ export default function Logout({ setSessionActive }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="inline-form">
       <input type="submit" value="Wyloguj" className="login-button"/>
     </form>
   );

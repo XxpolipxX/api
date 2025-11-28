@@ -16,8 +16,8 @@ export default function DeleteAccount({ setSessionActive }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="submit" className="login-button" value="Usuń konto" />
+        <form onSubmit={handleSubmit} className="inline-form">
+            <button className="user-button danger">Usuń konto</button>
         </form>
     );
 }

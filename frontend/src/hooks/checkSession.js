@@ -7,7 +7,7 @@ export default async function checkSession() {
                 'Accept': 'application/json'
             }
         });
-        console.log(response);
+        // console.log(response);
         return response.ok;
     } catch {
         return false;

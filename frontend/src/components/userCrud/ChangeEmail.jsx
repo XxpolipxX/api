@@ -15,9 +15,9 @@ export default function ChangeEmail() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="email" className="text-field" onChange={(e) => setNewEmail(e.target.value)} value={newEmail} placeholder="Nowy email"/>
-            <input type="submit" className="login-button" value="Zmień swój email" />
+        <form onSubmit={handleSubmit} className="inline-form">
+            <input type="email" className="text-field" onChange={(e) => setNewEmail(e.target.value)} value={newEmail} placeholder="Nowy email" required/>
+            <button type="submit" className="user-button">Zmień email</button>
         </form>
     );
 }

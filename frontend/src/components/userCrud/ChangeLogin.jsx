@@ -17,15 +17,9 @@ export default function ChangeLogin({ setLogin }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Nowy login"
-        value={newLogin}
-        className="text-field"
-        onChange={(e) => setNewLogin(e.target.value)}
-      />
-      <input type="submit" value="Zmień swój login" className="login-button"/>
+    <form onSubmit={handleSubmit} className="inline-form">
+      <input type="text" onChange={(e) => setNewLogin(e.target.value)} required className="text-field" placeholder="Nowy login"/>
+      <button type="submit" className="user-button">Zmień login</button>
     </form>
   );
 }

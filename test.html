@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="root">
+        <div class="background">
+            <div class="todo-container fade-in">
+                <h1 class="title">TODO List</h1>
+                <h3 class="subtitle">Witaj, <span class="username">Adam</span>!</h3>
+
+                <!-- Panel użytkownika -->
+                <div class="user-panel">
+                    <!-- Wylogowanie -->
+                    <form method="post" class="inline-form">
+                        <button type="submit" class="user-button">Wyloguj</button>
+                    </form>
+
+                    <!-- Zmiana loginu -->
+                    <form method="post" class="inline-form">
+                        <input type="text" name="new_login" placeholder="Nowy login" class="text-field" required>
+                        <button type="submit" class="user-button">Zmień login</button>
+                    </form>
+
+                    <!-- Zmiana emaila -->
+                    <form method="post" class="inline-form">
+                        <input type="email" name="new_email" placeholder="Nowy email" class="text-field" required>
+                        <button type="submit" class="user-button">Zmień email</button>
+                    </form>
+
+                    <!-- Usunięcie konta -->
+                    <form method="post" class="inline-form">
+                        <button type="submit" class="user-button danger">Usuń konto</button>
+                    </form>
+                </div>
+
+                <!-- Formularz dodania zadania -->
+                <form class="task-form">
+                    <input type="text" name="title" placeholder="Tytuł zadania" class="text-field" required>
+                    <input type="text" name="category" placeholder="Kategoria" class="text-field">
+                    <select name="priority" class="text-field">
+                        <option value="low">Niski</option>
+                        <option value="medium">Średni</option>
+                        <option value="high">Wysoki</option>
+                    </select>
+                    <textarea name="description" placeholder="Opis zadania" class="text-field"></textarea>
+                    <input type="date" name="due_date" class="text-field">
+                    <button type="submit" class="login-button">Dodaj zadanie</button>
+                </form>
+
+                <!-- Lista zadań -->
+                <div class="task-list">
+                    <h3 class="subtitle">Twoje zadania</h3>
+                    <div class="task-item">
+                        <div class="task-header">
+                            <span class="task-title">Zadanie przykładowe</span>
+                            <span class="task-priority high">Wysoki</span>
+                        </div>
+                        <p class="task-desc">Opis zadania...</p>
+                        <p class="task-date">Termin: 2025-12-01</p>
+                        <div class="task-actions">
+                            <button class="user-button">Edytuj</button>
+                            <button class="user-button">Usuń</button>
+                            <button class="user-button success">Oznacz jako wykonane</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtry -->
+                <div class="filters">
+                    <button class="user-button">Pokaż wykonane</button>
+                    <button class="user-button">Pokaż niewykonane</button>
+                    <button class="user-button">Filtruj (title, due_date)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
