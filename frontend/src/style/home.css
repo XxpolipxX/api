@@ -118,7 +118,6 @@ select.text-field {
     border: none;
     outline: none;
     transition: all 0.2s ease;
-    appearance: none; /* usuwa domyślny wygląd */
 }
 
 select.text-field:hover {
@@ -132,4 +131,21 @@ select.text-field:focus {
 select.text-field option {
     background-color: #1e1e2f; /* tło opcji */
     color: #fff; /* kolor tekstu opcji */
+}
+
+.task-status {
+    margin-left: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.task-status.completed {
+    color: #fff;
+    background-color: #28a745; /* zielony */
+}
+
+.task-status.not-completed {
+    color: #fff;
+    background-color: #dc3545; /* czerwony */
 }

@@ -19,12 +19,12 @@ export default async function changeLoginRequest(newLogin) {
             return {
                 success: result.success,
                 newLogin: result.newLogin
-            }
+            };
         } else {
             return {
                 success: result.success,
                 error: result.error
-            }
+            };
         }
     } catch(error) {
         return {error: error.message};

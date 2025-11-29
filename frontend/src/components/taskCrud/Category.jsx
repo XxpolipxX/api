@@ -8,8 +8,6 @@ export default function Category({ onCategoryChange, category }) {
         async function fetchData() {
             const data = await getCategories();
             setCategories(data);
-
-            // ustaw pierwszą kategorię jako domyślną
             if (data.length > 0 && !category) {
                 onCategoryChange(data[0].id);
             }

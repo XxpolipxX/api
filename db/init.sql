@@ -1,20 +1,24 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+SET collation_connection = 'utf8mb4_polish_ci';
+
 CREATE TABLE `users` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `login` VARCHAR(255) UNIQUE NOT NULL,
     `email` VARCHAR(255) UNIQUE NOT NULL,
     `password_hash` VARCHAR(255) NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci;
 
 CREATE TABLE `priority` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255) UNIQUE NOT NULL
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci;
 
 CREATE TABLE `categories` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255) UNIQUE NOT NULL
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci;
 
 CREATE TABLE `tasks` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -29,7 +33,7 @@ CREATE TABLE `tasks` (
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL,
     FOREIGN KEY (`priority_id`) REFERENCES `priority`(`id`) ON DELETE SET NULL
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci;
 
 CREATE TABLE `shared_tasks` (
     `task_id` INT NOT NULL,
@@ -38,7 +42,7 @@ CREATE TABLE `shared_tasks` (
     PRIMARY KEY (`task_id`, `shared_with`),
     FOREIGN KEY (`task_id`) REFERENCES `tasks`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`shared_with`) REFERENCES `users`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_polish_ci;
 
 INSERT INTO `priority` VALUES(NULL, 'wazne');
 INSERT INTO `priority` VALUES(NULL, 'pilne');

@@ -27,6 +27,7 @@ services:
       MYSQL_DATABASE: api_db
       MYSQL_USER: api_user
       MYSQL_PASSWORD: api_pass
+      MYSQL_COLLATION: utf8mb4_polish_ci
     ports:
       - "3306:3306"
     volumes:
