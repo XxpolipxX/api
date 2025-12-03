@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import getCategories from "../../hooks/getCategories";
+import { useEffect, useState } from 'react';
+import getCategories from '../../hooks/getCategories';
 
-export default function Category({ onCategoryChange, category }) {
+export default function CategorySelect({ onCategoryChange, category }) {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             const data = await getCategories();
             setCategories(data);
-            if (data.length > 0 && !category) {
+            if(data.length > 0 && !category) {
                 onCategoryChange(data[0].id);
             }
         }
@@ -17,7 +17,7 @@ export default function Category({ onCategoryChange, category }) {
 
     return (
         <select
-            className="text-field"
+            className='text-field'
             name="category"
             value={category}
             onChange={(e) => onCategoryChange(e.target.value)}

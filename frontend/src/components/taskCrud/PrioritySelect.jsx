@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import getPriorities from "../../hooks/getPriorities";
+import getPriorities from '../../hooks/getPriorities';
 
-export default function Priority({ onPriorityChange, priority }) {
-    const [priorities, setPriorities] = useState([]);
+export default function PrioritySelect({ onPriorityChange, priority }) {
+    const [priorities, setPriority] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             const data = await getPriorities();
-            setPriorities(data);
+            setPriority(data);
             if(data.length > 0 && !priority) {
                 onPriorityChange(data[0].id);
             }
@@ -18,7 +18,7 @@ export default function Priority({ onPriorityChange, priority }) {
     return (
         <select
             className="text-field"
-            name="priority"
+            name="category"
             value={priority}
             onChange={(e) => onPriorityChange(e.target.value)}
         >

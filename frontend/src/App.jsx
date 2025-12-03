@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import SessionGate from './components/SessionGate';
+import TasksPage from './pages/TasksPage';
 
 export default function App() {
   return (
@@ -37,6 +38,16 @@ export default function App() {
                 element={
                   isSessionActive ? (
                     <HomePage setSessionActive={setIsSessionActive} />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
+              />
+              <Route
+                path='/home/tasks'
+                element={
+                  isSessionActive ? (
+                    <TasksPage />
                   ) : (
                     <Navigate to="/login" replace />
                   )

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import getUserLogin from "../hooks/getUserLogin";
 import Loading from "../components/Loading";
 import UserCrud from "../components/userCrud/UserCrud";
-import TaskCrud from "../components/taskCrud/TaskCrud";
 
 export default function HomePage({ setSessionActive }) {
     const [login, setLogin] = useState(null);
@@ -21,7 +20,6 @@ export default function HomePage({ setSessionActive }) {
             <h3 className="subtitle">Witaj, <span className="username">{login}</span>!</h3>
 
             <UserCrud setLogin={setLogin} setSessionActive={setSessionActive} />
-            <TaskCrud />
         </div>
     );
 }

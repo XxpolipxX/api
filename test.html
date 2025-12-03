@@ -6,118 +6,144 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<!-- <body>
+<div class="background">
+  <div class="user-container fade-in">
+
+    <h1 class="title">Panel użytkownika</h1>
+    <h3 class="subtitle">Witaj, <span class="username">NazwaUzytkownika1</span>!</h3>
+
+    <section class="profile-box">
+      <h2>Twój profil</h2>
+      <p><strong>Login:</strong> <span class="profile-login">NazwaUzytkownika1</span></p>
+    </section>
+
+    <section class="actions-box">
+      <h2>Zarządzanie kontem</h2>
+
+      <form class="inline-form">
+        <input class="text-field" placeholder="Nowy login" required type="text">
+        <button class="user-button success" type="submit">Zmień login</button>
+      </form>
+
+      <form class="inline-form">
+        <input class="text-field" placeholder="Nowe hasło" required type="password">
+        <button class="user-button success" type="submit">Zmień hasło</button>
+      </form>
+
+      <form class="inline-form">
+        <button class="user-button danger" type="submit">Usuń konto</button>
+      </form>
+    </section>
+
+    <a href="/tasks" class="task-link">Przejdź do zadań</a>
+
+  </div>
+</div>
+</body> -->
+
+
 <body>
-    <div id="root">
-        <div class="background">
-            <div class="todo-container fade-in">
-                <h1 class="title">TODO List</h1>
-                <h3 class="subtitle">Witaj, <span class="username">Adam</span>!</h3>
+  <div id="root">
+    <div class="background">
+      <div class="todo-container fade-in">
+        <h1 class="title">Twoje zadania</h1>
+        <h3 class="subtitle">Panel zarządzania zadaniami</h3>
 
-                <!-- Panel użytkownika -->
-                <div class="user-panel">
-                    <!-- Wylogowanie -->
-                    <form method="post" class="inline-form">
-                        <button type="submit" class="user-button">Wyloguj</button>
-                    </form>
+        <!-- Formularz dodania zadania -->
+        <form class="task-form" id="addTaskForm">
+          <input placeholder="Tytuł zadania" class="text-field" required type="text" name="title">
+          <select class="text-field" name="category">
+            <option value="3">dom</option>
+            <option value="2">praca</option>
+            <option value="1">szkola</option>
+          </select>
+          <select class="text-field" name="priority">
+            <option value="3">nie wazne</option>
+            <option value="2">pilne</option>
+            <option value="1">wazne</option>
+          </select>
+          <textarea class="text-field" placeholder="Opis zadania" name="description"></textarea>
+          <input class="text-field" type="date" name="due_date">
+          <button type="submit" class="login-button">Dodaj zadanie</button>
+        </form>
 
-                    <!-- Zmiana loginu -->
-                    <form method="post" class="inline-form">
-                        <input type="text" name="new_login" placeholder="Nowy login" class="text-field" required>
-                        <button type="submit" class="user-button">Zmień login</button>
-                    </form>
+        <!-- Formularz filtrowania -->
+        <div class="filters">
+          <h4 class="filters-title">Wybierz pola do pobrania:</h4>
+          <div class="filter-fields">
+            <!-- Tytuł zawsze obowiązkowy -->
+            <label><input type="checkbox" name="fields" value="title" checked disabled> Tytuł (zawsze)</label>
+            <!-- Pola opcjonalne -->
+            <label><input type="checkbox" name="fields" value="description"> Opis</label>
+            <label><input type="checkbox" name="fields" value="category_id"> Kategoria</label>
+            <label><input type="checkbox" name="fields" value="priority_id"> Priorytet</label>
+            <label><input type="checkbox" name="fields" value="due_date"> Data</label>
+            <label><input type="checkbox" name="fields" value="is_completed"> Status</label>
+          </div>
 
-                    <!-- Zmiana emaila -->
-                    <form method="post" class="inline-form">
-                        <input type="email" name="new_email" placeholder="Nowy email" class="text-field" required>
-                        <button type="submit" class="user-button">Zmień email</button>
-                    </form>
-
-                    <!-- Usunięcie konta -->
-                    <form method="post" class="inline-form">
-                        <button type="submit" class="user-button danger">Usuń konto</button>
-                    </form>
-                </div>
-
-                <!-- Formularz dodania zadania -->
-                <form class="task-form">
-                    <input type="text" name="title" placeholder="Tytuł zadania" class="text-field" required>
-                    <input type="text" name="category" placeholder="Kategoria" class="text-field">
-                    <select name="priority" class="text-field">
-                        <option value="low">Niski</option>
-                        <option value="medium">Średni</option>
-                        <option value="high">Wysoki</option>
-                    </select>
-                    <textarea name="description" placeholder="Opis zadania" class="text-field"></textarea>
-                    <input type="date" name="due_date" class="text-field">
-                    <button type="submit" class="login-button">Dodaj zadanie</button>
-                </form>
-
-                <!-- Lista zadań -->
-                <div class="task-list">
-                    <h3 class="subtitle">Twoje zadania</h3>
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="task-title">Zadanie przykładowe</span>
-                            <span class="task-priority high">Wysoki</span>
-                        </div>
-                        <p class="task-desc">Opis zadania...</p>
-                        <p class="task-date">Termin: 2025-12-01</p>
-                        <div class="task-actions">
-                            <button class="user-button">Edytuj</button>
-                            <button class="user-button">Usuń</button>
-                            <button class="user-button success">Oznacz jako wykonane</button>
-                        </div>
-                    </div>
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="task-title">Zadanie przykładowe</span>
-                            <span class="task-priority high">Wysoki</span>
-                        </div>
-                        <p class="task-desc">Opis zadania...</p>
-                        <p class="task-date">Termin: 2025-12-01</p>
-                        <div class="task-actions">
-                            <button class="user-button">Edytuj</button>
-                            <button class="user-button">Usuń</button>
-                            <button class="user-button success">Oznacz jako wykonane</button>
-                        </div>
-                    </div>
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="task-title">Zadanie przykładowe</span>
-                            <span class="task-priority high">Wysoki</span>
-                        </div>
-                        <p class="task-desc">Opis zadania...</p>
-                        <p class="task-date">Termin: 2025-12-01</p>
-                        <div class="task-actions">
-                            <button class="user-button">Edytuj</button>
-                            <button class="user-button">Usuń</button>
-                            <button class="user-button success">Oznacz jako wykonane</button>
-                        </div>
-                    </div>
-                    <div class="task-item">
-                        <div class="task-header">
-                            <span class="task-title">Zadanie przykładowe</span>
-                            <span class="task-priority high">Wysoki</span>
-                        </div>
-                        <p class="task-desc">Opis zadania...</p>
-                        <p class="task-date">Termin: 2025-12-01</p>
-                        <div class="task-actions">
-                            <button class="user-button">Edytuj</button>
-                            <button class="user-button">Usuń</button>
-                            <button class="user-button success">Oznacz jako wykonane</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Filtry -->
-                <div class="filters">
-                    <button class="user-button">Pokaż wykonane</button>
-                    <button class="user-button">Pokaż niewykonane</button>
-                    <button class="user-button">Filtruj (title, due_date)</button>
-                </div>
+          <h4 class="filters-title">Filtry zadań:</h4>
+          <div class="filter-options">
+            <!-- Kategoria -->
+            <div class="filter-group">
+              <label for="category_id">Kategoria:</label>
+              <select id="category_id" name="category_id" class="text-field">
+                <option value="">-- wybierz kategorię --</option>
+                <option value="1">szkola</option>
+                <option value="2">praca</option>
+                <option value="3">dom</option>
+              </select>
             </div>
+
+            <!-- Priorytet -->
+            <div class="filter-group">
+              <label for="priority_id">Priorytet:</label>
+              <select id="priority_id" name="priority_id" class="text-field">
+                <option value="">-- wybierz priorytet --</option>
+                <option value="1">ważne</option>
+                <option value="2">pilne</option>
+                <option value="3">nie ważne</option>
+              </select>
+            </div>
+
+            <!-- Termin po -->
+            <div class="filter-group">
+              <label for="due_date_gt">Termin po:</label>
+              <input id="due_date_gt" type="date" name="due_date_gt" class="text-field">
+            </div>
+
+            <!-- Termin przed -->
+            <div class="filter-group">
+              <label for="due_date_lt">Termin przed:</label>
+              <input id="due_date_lt" type="date" name="due_date_lt" class="text-field">
+            </div>
+
+            <!-- Status -->
+            <div class="filter-group">
+              <label for="is_completed">Status zadania:</label>
+              <select id="is_completed" name="is_completed" class="text-field">
+                <option value="">-- wybierz status --</option>
+                <option value="eq:0">Niewykonane</option>
+                <option value="eq:1">Wykonane</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="user-button success" id="applyFilters">Filtruj</button>
         </div>
+
+
+        <!-- Lista zadań -->
+        <div class="task-list">
+          <h3 class="subtitle">Lista zadań</h3>
+          <!-- Wyniki będą renderowane tutaj -->
+        </div>
+
+        <!-- Powrót do strony głównej -->
+        <a href="/" class="user-button">Powrót do konta</a>
+      </div>
     </div>
+  </div>
 </body>
 
 </html>

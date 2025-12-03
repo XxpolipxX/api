@@ -240,7 +240,7 @@
     font-weight: bold;
 }
 
-.user-panel, .filters {
+.user-panel {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
@@ -322,4 +322,109 @@
 .inline-form .text-field {
     flex: 1;
     min-width: 160px;
+}
+
+.user-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 50px 60px;
+  gap: 35px;
+  box-shadow: 0 0 25px rgba(255,255,255,0.4);
+  transition: 0.2s ease;
+}
+
+.profile-box, .actions-box {
+  width: 100%;
+  background-color: rgba(255,255,255,0.06);
+  padding: 25px 30px;
+  border-radius: 15px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-box h2, .actions-box h2 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.task-link {
+  text-decoration: none;
+  background-color: #3b82f6;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.task-link:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+select.text-field option {
+    background-color: #1e1e2f; /* tło opcji */
+    color: #fff; /* kolor tekstu opcji */
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+}
+
+.filters-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.filter-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-group label {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filter-fields label {
+  background-color: rgba(255,255,255,0.1);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+}
+
+.filter-fields input[type="checkbox"] {
+  margin-right: 6px;
 }

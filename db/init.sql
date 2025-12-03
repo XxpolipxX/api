@@ -46,7 +46,7 @@ CREATE TABLE `shared_tasks` (
 
 INSERT INTO `priority` VALUES(NULL, 'wazne');
 INSERT INTO `priority` VALUES(NULL, 'pilne');
-INSERT INTO `priority` VALUES(NULL, 'nie wazne');
+INSERT INTO `priority` VALUES(NULL, 'nie ważne');
 
 INSERT INTO `categories` VALUES (NULL, 'szkola');
 INSERT INTO `categories` VALUES (NULL, 'praca');
