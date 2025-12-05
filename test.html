@@ -6,43 +6,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<!-- <body>
-<div class="background">
-  <div class="user-container fade-in">
-
-    <h1 class="title">Panel użytkownika</h1>
-    <h3 class="subtitle">Witaj, <span class="username">NazwaUzytkownika1</span>!</h3>
-
-    <section class="profile-box">
-      <h2>Twój profil</h2>
-      <p><strong>Login:</strong> <span class="profile-login">NazwaUzytkownika1</span></p>
-    </section>
-
-    <section class="actions-box">
-      <h2>Zarządzanie kontem</h2>
-
-      <form class="inline-form">
-        <input class="text-field" placeholder="Nowy login" required type="text">
-        <button class="user-button success" type="submit">Zmień login</button>
-      </form>
-
-      <form class="inline-form">
-        <input class="text-field" placeholder="Nowe hasło" required type="password">
-        <button class="user-button success" type="submit">Zmień hasło</button>
-      </form>
-
-      <form class="inline-form">
-        <button class="user-button danger" type="submit">Usuń konto</button>
-      </form>
-    </section>
-
-    <a href="/tasks" class="task-link">Przejdź do zadań</a>
-
-  </div>
-</div>
-</body> -->
-
-
 <body>
   <div id="root">
     <div class="background">
@@ -137,6 +100,61 @@
         <div class="task-list">
           <h3 class="subtitle">Lista zadań</h3>
           <!-- Wyniki będą renderowane tutaj -->
+           <!-- Przykładowe zadania -->
+          <div class="task-item">
+            <div class="task-header">
+              <span>Posprzątać kuchnię</span>
+              <span class="task-priority high">ważne</span>
+            </div>
+            <p>Umyć naczynia, wyczyścić blat, wynieść śmieci.</p>
+            <p>Kategoria: dom</p>
+            <p>Termin: 2025-02-20</p>
+            <p>Status: oczekujące</p>
+          </div>
+
+          <div class="task-item">
+            <div class="task-header">
+              <span>Prezentacja na poniedziałek</span>
+              <span class="task-priority medium">pilne</span>
+            </div>
+            <p>10 slajdów o sztucznej inteligencji.</p>
+            <p>Kategoria: szkoła</p>
+            <p>Termin: 2025-02-17</p>
+            <p>Status: oczekujące</p>
+          </div>
+
+          <div class="task-item">
+            <div class="task-header">
+              <span>Zakupy spożywcze</span>
+              <span class="task-priority low">nie ważne</span>
+            </div>
+            <p>Mleko, chleb, warzywa, jajka.</p>
+            <p>Kategoria: dom</p>
+            <p>Termin: 2025-02-19</p>
+            <p>Status: wykonane</p>
+          </div>
+
+          <div class="task-item">
+            <div class="task-header">
+              <span>Wysłać raport miesięczny</span>
+              <span class="task-priority high">ważne</span>
+            </div>
+            <p>Raport finansowy za styczeń.</p>
+            <p>Kategoria: praca</p>
+            <p>Termin: 2025-02-18</p>
+            <p>Status: oczekujące</p>
+          </div>
+
+          <div class="task-item">
+            <div class="task-header">
+              <span>Przeczytać rozdział z matematyki</span>
+              <span class="task-priority low">nie ważne</span>
+            </div>
+            <p>Funkcje liniowe i kwadratowe.</p>
+            <p>Kategoria: szkoła</p>
+            <p>Termin: 2025-02-25</p>
+            <p>Status: oczekujące</p>
+          </div>
         </div>
 
         <!-- Powrót do strony głównej -->

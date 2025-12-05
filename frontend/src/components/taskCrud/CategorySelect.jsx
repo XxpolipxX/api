@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import getCategories from '../../hooks/getCategories';
 
-export default function CategorySelect({ onCategoryChange, category }) {
+export default function CategorySelect({ onCategoryChange, category, name, id }) {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -18,9 +18,10 @@ export default function CategorySelect({ onCategoryChange, category }) {
     return (
         <select
             className='text-field'
-            name="category"
-            value={category}
+            name={name || undefined}
+            value={category || undefined}
             onChange={(e) => onCategoryChange(e.target.value)}
+            id={id || undefined}
         >
             {categories.map((cat) => (
                 <option value={cat.id} key={cat.id}>

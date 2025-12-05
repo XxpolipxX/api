@@ -59,10 +59,11 @@ export default function AuthForm({
                     name={field.name}
                     required
                     minLength={field.minLength || undefined}
+                    autoComplete={field.autoComplete || undefined}
                 />
             ))}
 
-            { error && <h4 className="error-label">{error ? error : 'Hasło musi mieć min. 8 znaków, zawierać 1 dużą literę, 1 cyfrę i 1 znak specjalny'}</h4> }
+            { error && <h4 className="error-label">{error || 'Hasło musi mieć min. 8 znaków, zawierać 1 dużą literę, 1 cyfrę i 1 znak specjalny'}</h4> }
             { success && <h4 className="success-label">{success}</h4> }
 
             <input type="submit" value={submitLabel} className="login-button"/>

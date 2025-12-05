@@ -36,20 +36,24 @@ export default function AddTaskForm() {
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                name="title"
+                id="title"
             />
-            <CategorySelect onCategoryChange={setCategory} category={category} />
-            <PrioritySelect onPriorityChange={setPriority} priority={priority} />
+            <CategorySelect onCategoryChange={setCategory} category={category} id={"add-task-form-category"} name={"add-task-form-category"} />
+            <PrioritySelect onPriorityChange={setPriority} priority={priority} id={"add-task-form-priority"} name={"add-task-form-priority"}/>
             <textarea
                 className="text-field"
                 placeholder="Opis zadania"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                name="description"
+                id="description"
             ></textarea>
-            <input type="date" className="text-field" required value={date} onChange={(e) => setDate(e.target.value)}/>
+            <input type="date" id="due-date" name="due-date" className="text-field" required value={date} onChange={(e) => setDate(e.target.value)}/>
             <button type="submit" className="login-button">Dodaj zadanie</button>
 
-            {error && <h4 className="error-label">{error ? error : ''}</h4>}
-            {success && <h4 className="success-label">{success ? success : ''}</h4>}
+            {error && <h4 className="error-label">{error || ''}</h4>}
+            {success && <h4 className="success-label">{success || ''}</h4>}
         </form>
     );
 }

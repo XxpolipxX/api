@@ -18,7 +18,7 @@ export default function ChangeLogin({ setLogin }) {
 
   return (
     <form onSubmit={handleSubmit} className="inline-form">
-      <input type="text" onChange={(e) => setNewLogin(e.target.value)} required className="text-field" placeholder="Nowy login"/>
+      <input type="text" onChange={(e) => setNewLogin(e.target.value)} name="new-login" id="new-login" required className="text-field" placeholder="Nowy login" autoComplete="off"/>
       <button type="submit" className="user-button">Zmień login</button>
     </form>
   );

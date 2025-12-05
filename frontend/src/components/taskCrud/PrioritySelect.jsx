@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import getPriorities from '../../hooks/getPriorities';
 
-export default function PrioritySelect({ onPriorityChange, priority }) {
+export default function PrioritySelect({ onPriorityChange, priority, id, name }) {
     const [priorities, setPriority] = useState([]);
 
     useEffect(() => {
@@ -18,9 +18,10 @@ export default function PrioritySelect({ onPriorityChange, priority }) {
     return (
         <select
             className="text-field"
-            name="category"
-            value={priority}
+            name={name || undefined}
+            value={priority || undefined}
             onChange={(e) => onPriorityChange(e.target.value)}
+            id={id || undefined}
         >
             {priorities.map((prio) => (
                 <option value={prio.id} key={prio.id}>
