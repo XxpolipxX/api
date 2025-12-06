@@ -174,6 +174,11 @@
             if(isset($filters['pola'])) {
                 $columns = explode(',', $filters['pola']);
                 $columns = array_intersect($columns, $allowedFields);
+
+                if(!in_array('id', $columns)) {
+                    $columns[] = 'id';
+                }
+
                 $select = !empty($columns) ? implode(',', $columns) : '*';
                 unset($filters['pola']);    // żeby nie było traktowane jako wwarunke
             } else {
